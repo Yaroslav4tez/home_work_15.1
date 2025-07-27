@@ -28,11 +28,14 @@ const todoitemchecked = document.querySelector('todo-item--checked');
 
 
 
-buttonTask.addEventListener('click', function () {
+buttonTask.addEventListener('click', function (event) {
     if (userInputTask.value.trim() === "") {
         alert('sorry you have empty task fild');
         return;
-    } 
+    }
+    
+   event.preventDefault();
+    
     const userTaskText = userInputTask.value;
 
     const newLi = document.createElement('li');
@@ -56,7 +59,9 @@ buttonTask.addEventListener('click', function () {
         });
 
         document.querySelector('ul').appendChild(newLi);
+        crosTask();
 });
+
 
 
 document.querySelectorAll('.todo-item__delete').forEach(button => {
@@ -67,3 +72,20 @@ document.querySelectorAll('.todo-item__delete').forEach(button => {
         }
     })
 }) 
+
+function crosTask() {
+    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', function (event) {
+        const checkbox = event.target;
+        const li = checkbox.closest('li');
+
+        if (checkbox.checked) {
+            li.classList.add('todo-item--checked'); 
+        } else {
+            li.classList.remove('todo-item--checked');
+        }
+    });
+});
+}
+
+crosTask();
